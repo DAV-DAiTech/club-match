@@ -1,0 +1,15 @@
+# Written by scripts/deploy-pages.mjs in DAV-CLUB-MATCHING; edit it there.
+# Re-reads clubs' Google Forms and settles application windows, which is
+# also when students who saved a club are emailed that it opened.
+name: Application windows
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+permissions: {}
+jobs:
+  sweep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - run: curl --fail --silent --show-error --max-time 90 -X POST https://dav-club-match-api.vercel.app/applications/sync
